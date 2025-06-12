@@ -6,20 +6,23 @@ const numbers = input[1].split(' ').map(Number);
 // Please Write your code here.
 numbers.sort((a, b) => a - b);
 
+let left = 0;
+let right = n - 1;
 let result = Infinity;
 
-for (let left = 0; left < n; left++) {
-    let right = left + 1;
+while (left < right) {
+    const sum = numbers[left] + numbers[right];
 
-    while (right < n) {
-        const sum = numbers[left] + numbers[right];
-        const diff = Math.abs(sum) - Math.abs(result);
+    if (Math.abs(sum) < result) {
+        result = Math.abs(sum);
+    }
 
-        if (Math.sign(diff) === -1) {
-            result = sum;
-        }
+    if (sum === 0) break;
 
-        right++;
+    if (sum < 0) {
+        left++;
+    } else {
+        right--;
     }
 }
 
