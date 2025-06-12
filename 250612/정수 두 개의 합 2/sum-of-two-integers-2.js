@@ -14,11 +14,18 @@ let result = 0;
 
 while (left < right) {
     const sum = arr[left] + arr[right];
+
     if (sum <= k) {
         result++;
         right--;
     } else {
         right--;
+    }
+
+    // 좌측 포인터 이동
+    if (left === right) {
+        left++;
+        right = n - 1;
     }
 }
 
