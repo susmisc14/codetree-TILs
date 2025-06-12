@@ -8,20 +8,21 @@ for (let i = 1; i <= n; i++) {
 }
 
 // Please Write your code here.
+arr.sort((a, b) => a - b);
+
 let result = 0;
 
-for (let right = 0; right < n; right++) {
-    const item = arr[right];
-    if (item >= k) continue;
+for (let left = 0; left < n; left++) {
+    if (arr[left] >= k) break;
 
-    let left = 0;
+    let right = left + 1;
 
-    while (left < right) {
-        if (arr[left] + item <= k) {
+    while (right < n) {
+        if (arr[left] + arr[right] <= k) {
             result++;
         }
 
-        left++;
+        right++;
     }
 }
 
