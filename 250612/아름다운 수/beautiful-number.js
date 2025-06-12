@@ -15,13 +15,17 @@ const n = Number(input[0]);
  */
 
 function isButiful(number) {
+    const stringified = number.toString();
     let result = false;
 
-    const stringified = number.toString();
+    if (/[056789]/.test(stringified)) {
+        return result;
+    }
+
     const group = stringified.match(/(.)\1*/g);
     for (const item of group) {
         const first = parseInt(item[0], 10);
-        if (first === 0 || item.length % first !== 0) {
+        if (item.length % first !== 0) {
             result = false;
             break;
         };
