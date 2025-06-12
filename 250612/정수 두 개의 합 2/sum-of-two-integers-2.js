@@ -8,24 +8,20 @@ for (let i = 1; i <= n; i++) {
 }
 
 // Please Write your code here.
-let left = 0;
-let right = n - 1;
 let result = 0;
 
-while (left < right) {
-    const sum = arr[left] + arr[right];
+for (let right = 0; right < n; right++) {
+    const item = arr[right];
+    if (item >= k) continue;
 
-    if (sum <= k) {
-        result++;
-        right--;
-    } else {
-        right--;
-    }
+    let left = 0;
 
-    // 좌측 포인터 이동
-    if (left === right) {
+    while (left < right) {
+        if (arr[left] + item <= k) {
+            result++;
+        }
+
         left++;
-        right = n - 1;
     }
 }
 
