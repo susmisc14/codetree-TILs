@@ -34,7 +34,7 @@ function solve(grid) {
 
     for (let y = 0; y < grid.length; y++) {
         for (let x = 0; x < grid[y].length; x++) {
-            if (grid[y][x] !== 1) continue;
+            // if (grid[y][x] !== 1) continue;
 
             dp = Math.max(move(x, y, 0), dp);
         }
