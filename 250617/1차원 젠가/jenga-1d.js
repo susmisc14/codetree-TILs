@@ -7,18 +7,8 @@ const [s1, e1] = input[n + 1].split(' ').map(Number);
 const [s2, e2] = input[n + 2].split(' ').map(Number);
 
 // Please write your code here.
-function solve(blocks, tasks) {
-    const remainingBlocks = [...blocks];
-    for (const [s, e] of tasks) {
-        const start = s - 1;
-        const deleteCount = e - start;
+blocks.splice(s1 - 1, e1 - s1 + 1);
+blocks.splice(s2 - 1, e2 - s2 + 1);
 
-        remainingBlocks.splice(start, deleteCount);
-    }
-    return remainingBlocks;
-}
-
-const remainingBlocks = solve(blocks, [[s1, e1], [s2, e2]]);
-
-console.log(remainingBlocks.length);
-console.log(remainingBlocks.join("\n"));
+console.log(blocks.length);
+console.log(blocks.join("\n"));
