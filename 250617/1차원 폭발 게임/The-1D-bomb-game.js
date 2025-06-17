@@ -5,27 +5,37 @@ const [n, m] = input[0].split(' ').map(Number);
 const numbers = input.slice(1, Number(n) + 1).map(Number);
 
 // Please Write your code here.
-let currentNumber = numbers[0];
-let numberOfNumbers = 0;
-let pointer = 0;
+let result = [...numbers];
 
-while (pointer <= numbers.length) {
-    if (currentNumber === numbers[pointer]) {
-        numberOfNumbers++;
-        pointer++;
-    } else {
-        if (numberOfNumbers >= m) {
-            const start = pointer - numberOfNumbers;
-            numbers.splice(start, numberOfNumbers);
+while (true) {
+    const temp = [];
+    let bombed = false;
 
-            pointer = 0;
+    let i = 0;
+    while (i < result.length) {
+        let j = i;
+        while (j < result.length && result[j] === result[i]) {
+            j += 1;
         }
 
-        currentNumber = numbers[pointer];
-        numberOfNumbers = 1;
-        pointer++;
+        const groupSize = j - i;
+        const currentGroup = result.slice(i, j);
+
+        if(groupSize < m) {
+            temp.push(...currentGroup);
+        } else {
+            bombed = true;
+        }
+
+        i = j;
     }
+
+    if (!bombed) {
+        break;
+    }
+
+    result = temp;
 }
 
-console.log(numbers.length);
-console.log(numbers.reverse().join("\n"));
+console.log(result.length);
+console.log(result.join("\n"));
