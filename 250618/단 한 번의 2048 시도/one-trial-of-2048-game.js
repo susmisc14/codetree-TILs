@@ -1,7 +1,7 @@
 const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split('\n');
 
-const grid = input.slice(0, 4).map(line => line.split(' ').map(Number));
+const grid = input.slice(0, 4).map(line => line.trim().split(' ').map(Number));
 const dir = input[4];
 
 // Please Write your code here.
@@ -15,11 +15,10 @@ if (dir === "U") {
             const maxY = Math.min(j + 1, 3);
 
             const currentValue = grid[j][i];
-            const nextValue = grid[maxY][i];
             const prevValue = grid[minY][i];
 
-            if (currentValue === nextValue) {
-                grid[j][i] = currentValue + nextValue;
+            if (currentValue === grid[j + 1]?.[i]) {
+                grid[j][i] = currentValue + grid[j + 1]?.[i];
                 grid[maxY][i] = 0;
                 sumed[j][i] = true;
             }
@@ -53,11 +52,10 @@ if (dir === "R") {
             const maxX = Math.min(j + 1, 3);
 
             const currentValue = grid[i][j];
-            const nextValue = grid[i][minX];
             const prevValue = grid[i][maxX];
 
-            if (currentValue === nextValue) {
-                grid[i][j] = currentValue + nextValue;
+            if (currentValue === grid[i][j - 1]) {
+                grid[i][j] = currentValue + grid[i][j - 1];
                 grid[i][minX] = 0;
                 sumed[i][j] = true;
             }
@@ -91,11 +89,10 @@ if (dir === "D") {
             const maxY = Math.min(j + 1, 3);
 
             const currentValue = grid[j][i];
-            const nextValue = grid[minY][i];
             const prevValue = grid[maxY][i];
 
-            if (currentValue === nextValue) {
-                grid[j][i] += nextValue;
+            if (currentValue === grid[j - 1]?.[i]) {
+                grid[j][i] += grid[j - 1]?.[i];
                 grid[minY][i] = 0;
                 sumed[j][i] = true;
             }
@@ -129,11 +126,10 @@ if (dir === "L") {
             const maxX = Math.min(j + 1, 3);
 
             const currentValue = grid[i][j];
-            const nextValue = grid[i][maxX];
             const prevValue = grid[i][minX];
 
-            if (currentValue === nextValue) {
-                grid[i][j] = currentValue + nextValue;
+            if (currentValue === grid[i][j + 1]) {
+                grid[i][j] = currentValue + grid[i][j + 1];
                 grid[i][maxX] = 0;
                 sumed[i][j] = true;
             }
