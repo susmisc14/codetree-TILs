@@ -4,19 +4,28 @@ const n = Number(input[0]);
 const segments = input.slice(1, 1 + n).map(line => line.trim().split(' ').map(Number));
 
 // Please Write your code here.
-const result = (function recursive(segments) {
-    let count = 1;
-    
-    for (const segment of segments) {
-        const filtered = segments.filter(
-            ([start, end]) => !(segment.includes(start) || segment.includes(end))
-        );
+segments.sort((a, b) => a[0] !== b[0] ? a[0] - b[0] : a[1] - b[1]);
 
-        if (filtered.length === 0) {
-            return count;
+const result = (function recursive(segments) {
+    if (segments.length === 0) {
+        return 0;
+    }
+
+    let count = 0;
+    for (let i = 0; i < segments.length; i++) {
+        const remainingSegments = [];
+        for (let j = 0; j < segments.length; j++) {
+            if (i === j) continue;
+
+            const [s1, e1] = segments[i];
+            const [s2, e2] = segments[j];
+
+            if (!(s1 < e2 && s2 < e1)) {
+                remainingSegments.push(segments[j]);
+            }
         }
 
-        count = Math.max(recursive(filtered) + 1, count);
+        count = Math.max(recursive(remainingSegments) + 1, count);
     }
 
     return count;
