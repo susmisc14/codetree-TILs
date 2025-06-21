@@ -13,7 +13,7 @@ const dy = [0, 1];
 const result = (function recursive(x, y){
     let arrival = 0;
 
-    if (x === n - 1 && y === m - 1) {
+    if (x === m - 1 && y === n - 1) {
         return 1;        
     }
     
@@ -23,7 +23,7 @@ const result = (function recursive(x, y){
         const nx = x + dx[i];
         const ny = y + dy[i];
 
-        if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+        if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
 
         if (grid[ny][nx] === 1 && !visited[ny][nx]) {
             arrival = Math.max(recursive(nx, ny), arrival);
