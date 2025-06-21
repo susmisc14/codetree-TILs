@@ -40,6 +40,8 @@ switch (dir) {
         currentGrid = move(currentGrid);
 
         currentGrid = rotate(currentGrid);
+        currentGrid = rotate(currentGrid);
+        currentGrid = rotate(currentGrid);
 
         break;
     }
