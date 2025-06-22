@@ -23,7 +23,6 @@ while (queue.length > 0) {
         break;
     }
 
-    visited[y][x] = true;
     
     for (let i = 0; i < 4; i++) {
         const nx = x + dx[i];
@@ -34,6 +33,7 @@ while (queue.length > 0) {
         if (grid[ny][nx] === 0 || visited[ny][nx]) continue;
 
         queue.push([nx, ny]);
+        visited[ny][nx] = true;   
     }
 }
 
