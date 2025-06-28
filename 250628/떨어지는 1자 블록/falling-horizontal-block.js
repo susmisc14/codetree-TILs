@@ -1,8 +1,8 @@
 const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split('\n');
 
-const [n, m, k] = input[0].split(' ').map(Number);
-const grid = input.slice(1, 1 + n).map(line => line.split(' ').map(Number));
+const [n, m, k] = input[0].trim().split(' ').map(Number);
+const grid = input.slice(1, 1 + n).map(line => line.trim().split(' ').map(Number));
 
 // Please Write your code here.
 function solve() {
@@ -19,10 +19,8 @@ function solve() {
         if (baseY !== null) break;
     }
 
-    if (baseY !== null) {
-        for (let c = k - 1; c < k - 1 + m; c++) {
-            newGrid[baseY][c] = 1;
-        }
+    for (let c = k - 1; c < k - 1 + m; c++) {
+        newGrid[baseY ?? n - 1][c] = 1;
     }
 
     return newGrid.map((row) => row.join(" ")).join("\n");
