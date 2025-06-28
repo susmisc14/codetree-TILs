@@ -11,16 +11,15 @@ function solve() {
         Array.from({ length: n }, () => new Array(4).fill(false))
     );
 
-    // 북(0), 동(1), 남(2), 서(3)
-    const dx = [0, 1, 0, -1];
     const dy = [-1, 0, 1, 0];
+    const dx = [0, 1, 0, -1];
 
-    let dir = 1;
-    let time = 0;
     let x = startX - 1;
     let y = startY - 1;
+    let dir = 1;
+    let time = 0;
 
-    while (inRange(x, y)) {
+    while (true) {
         if (visited[y][x][dir]) {
             return -1;
         }
@@ -29,30 +28,31 @@ function solve() {
         const nx = x + dx[dir];
         const ny = y + dy[dir];
 
-        if (!inRange(nx, ny)) {
-            time++;
-            break;
-        }
-
-        if (grid[ny][nx] === "#") {
+        if (inRange(nx, ny) && grid[ny][nx] === "#") {
             dir = (dir - 1 + 4) % 4;
-            continue;
-        }
+        } else {
+            if (!inRange(nx, ny)) {
+                time += 1;
+                break;
+            }
 
-        y = ny;
-        x = nx;
-        time++;
+            const rightDirAfterMove = (dir + 1) % 4;
+            const rx = nx + dx[rightDirAfterMove];
+            const ry = ny + dy[rightDirAfterMove];
 
-        const rightDir = (dir + 1) % 4;
-        const rx = x + dx[rightDir];
-        const ry = y + dy[rightDir];
-
-        // 오른쪽이 벽이 아니라면(길이라면) 오른쪽으로 방향 전환
-        if (inRange(rx, ry) && grid[ry][rx] !== '#') {
-            dir = rightDir;
+            if (!inRange(rx, ry) || grid[ry][rx] === "#") {
+                x = nx;
+                y = ny;
+                time += 1;
+            } else {
+                x = rx;
+                y = ry;
+                dir = rightDirAfterMove;
+                time += 2;
+            }
         }
     }
-
+    
     return time;
 }
 
