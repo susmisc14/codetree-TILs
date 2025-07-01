@@ -6,30 +6,34 @@ const nums = input[1].split(' ').map(Number);
 
 // Please write your code here.
 function solve() {
-    const result = (function recursive (position, count) {
+    const dp = new Array(n).fill(-1);
+
+    const result = (function recursive (position) {
         // Base Case
         if (position + 1 >= n) {
-            return count;
+            return 0;
+        }
+
+        if (dp[position] !== -1) {
+            return dp[position];
         }
 
         // Recursive Step
         const step = nums[position];
-        let minCount = -1;
+        let minCount = Number.MAX_SAFE_INTEGER;
 
         for (let i = 1; i <= step; i++) {
-            const foundCount = recursive(position + i, count + 1);
-
-            if (minCount !== -1) {
-                minCount = Math.min(foundCount, minCount);
-            } else {
-                minCount = foundCount;
+            const updatedCount = recursive(position + i);
+            if (updatedCount !== Number.MAX_SAFE_INTEGER) {
+                minCount = Math.min(updatedCount + 1, minCount);
             }
         }
 
+        dp[position] = minCount;
         return minCount;
     })(0, 0);
 
-    return result;
+    return result !== Number.MAX_SAFE_INTEGER ? result : -1;
 }
 
 console.log(solve());
