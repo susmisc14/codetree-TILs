@@ -6,20 +6,17 @@ const grid = input.slice(1, 1 + n).map(line => line.split(' ').map(Number));
 const [r, c] = input[1 + n].split(' ').map(Number);
 
 // Please write your code here.
-const disabled = {};
-
-// 시계 방향
-const dx = [1, 0, -1, 0];
-const dy = [0, 1, 0, -1];
-
 function solve() {
     let cx = c - 1;
     let cy = r - 1;
 
     for (let i = 0; i < k; i++) {
-        const position = move(cx, cy);
-        cx = position[0];
-        cy = position[1];
+        const [nx, ny] = move([cx, cy]);
+
+        if (cx === nx && cy === ny) break;
+
+        cx = nx;
+        cy = ny;
     }
 
     return `${cy + 1} ${cx + 1}`;
@@ -28,45 +25,53 @@ function solve() {
 console.log(solve());
 
 // helpers
-function move(cx, cy) {
-    let moved = false;
+function move([x, y]) {
+    const value = grid[y][x];
 
-    for (let i = 0; i < 4; i++) {
-        const nx = cx + dx[i];
-        const ny = cy + dy[i];
+    const queue = [];
+    const visited = Array.from({ length: n }, () => Array(n).fill(false));
+    const candidates = [];
 
-        if (!inRange(nx, ny) || grid[ny][nx] >= grid[cy][cx]) continue;
+    queue.push([x, y]);
+    visited[y][x] = true;
 
-        moved = true;
-    }
+    // 시계 방향
+    const dx = [1, 0, -1, 0];
+    const dy = [0, 1, 0, -1];
 
-    if (!moved) {
-        return [cx, cy];
-    }
+    let head = 0;
+    while(head < queue.length) {
+        const [cx, cy] = queue[head];
+        head += 1;
 
-    const result = [];
-    let tempValue = 0;
+        for (let i = 0; i < 4; i++) {
+            const nx = cx + dx[i];
+            const ny = cy + dy[i];
 
-    for (let r = n - 1; r >= 0; r--) {
-        for (let c = n - 1; c >= 0; c--) {
-            if (c > disabled[r]) continue;
-
-            if (grid[r][c] < grid[cy][cx] && grid[r][c] >= tempValue) {
-                result[0] = c;
-                result[1] = r;
-                tempValue = grid[r][c];
+            if (inRange(nx, ny) && !visited[ny][nx] && grid[ny][nx] < value) {
+                queue.push([nx, ny]);
+                candidates.push([grid[ny][nx], nx, ny]);
+                visited[ny][nx] = true;
             }
         }
     }
 
-    for (let r = 0; r < n; r++) {
-        for (let c = 0; c < n; c++) {
-            if (grid[r][c] !== grid[result[1]][result[0]]) continue;
-            disabled[r] = c;
-        }
+
+    if (candidates.length === 0) {
+        return [x, y];
     }
 
-    return result;
+    candidates.sort((a, b) => {
+        if (a[0] !== b[0]) {
+            return b[0] - a[0];
+        } else if (a[2] !== b[2]) {
+            return a[2] - b[2];
+        } else {
+            return a[1] - b[1];
+        }
+    });
+
+    return [candidates[0][1], candidates[0][2]];
 }
 
 function inRange(x, y) {
