@@ -7,26 +7,35 @@ const startPoints = input.slice(1 + N, 1 + N + K).map(line => line.split(' ').ma
 
 // Please Write your code here.
 function solve() {
-    const result = (function recursive(grid, [baseRow, baseCol], removedStones) {
-        if (removedStones.length === M) {
-            return countMove(grid, startPoints);
-        }
-        
-        let maxCount = 0;
-
-        for (let row = baseRow; row < N; row++) {
-            for (let col = baseCol; col < N; col++) {
-                const newGrid = grid.map((row) => [...row]);
-                
-                if (newGrid[row][col] === 1) {
-                    newGrid[row][col] = 0;
-                    maxCount = Math.max(recursive(newGrid, [row, col + 1], [...removedStones, [row, col]]), maxCount);
-                }
+    const stones = [];
+    for (let row = 0; row < N; row++) {
+        for (let col = 0; col < N; col++) {
+            if (grid[row][col] === 1) {
+                stones.push([row, col]);
             }
         }
-        
+    }
+
+    const result = (function recursive(index, removedStones) {
+        if (removedStones.length === M) {
+            const newGrid = grid.map((row) => [...row]);
+            removedStones.forEach(([row, col]) => {
+                newGrid[row][col] = 0;
+            });
+
+            return countMove(newGrid, startPoints);
+        }
+
+        let maxCount = 0;
+
+        for (let i = index; i < stones.length; i++) {
+            removedStones.push(stones[i]);
+            maxCount = Math.max(recursive(i + 1, removedStones), maxCount);
+            removedStones.pop();
+        }
+
         return maxCount;
-    })(grid, [0, 0], []);
+    })(0, []);
 
     return result;
 }
