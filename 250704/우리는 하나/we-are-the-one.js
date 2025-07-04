@@ -34,6 +34,8 @@ function countMove(startPosition, visited) {
     const queue = [startPosition];
     let head = 0;
 
+    visited[startPosition[0]][startPosition[1]] = true;
+
     // 시계 방향
     const dr = [0, 1, 0, -1];
     const dc = [1, 0, -1, 0];
@@ -43,6 +45,7 @@ function countMove(startPosition, visited) {
     while(head < queue.length) {
         const [currentRow, currentCol] = queue[head];
         head += 1;
+        count += 1;
 
         for (let i = 0; i < 4; i++) {
             const nextRow = currentRow + dr[i];
@@ -53,7 +56,6 @@ function countMove(startPosition, visited) {
             if (!visited[nextRow][nextCol] && canMove(grid[currentRow][currentCol], grid[nextRow][nextCol])) {
                 queue.push([nextRow, nextCol]);
                 visited[nextRow][nextCol] = true;
-                count += 1;
             }
         }
     }
