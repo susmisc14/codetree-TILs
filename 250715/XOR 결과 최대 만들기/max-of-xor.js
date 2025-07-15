@@ -6,19 +6,16 @@ const a = input[1].split(' ').map(Number);
 
 // Please Write your code here.
 function solve() {
-    const result = (function recursive(sequence) {
-        if (sequence.length === M) {
+    const result = (function recursive(index, sequence) {
+        if (sequence.length === M || index === N) {
             return sequence.reduce((acc, current) => acc ^ current, 0);
         }
 
-        let maxValue = 0;
+        const resultWithSkipped = recursive(index + 1, sequence);
+        const resultWithKept = recursive(index + 1, [...sequence, a[index]]);
 
-        for (const element of a) {
-            maxValue = Math.max(recursive([...sequence, element]), maxValue);
-        }
-
-        return maxValue;
-    })([]);
+        return Math.max(resultWithSkipped, resultWithKept);
+    })(0, []);
 
     return result;
 }
