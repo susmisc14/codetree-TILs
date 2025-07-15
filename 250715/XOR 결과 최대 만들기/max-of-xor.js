@@ -7,7 +7,11 @@ const a = input[1].split(' ').map(Number);
 // Please Write your code here.
 function solve() {
     const result = (function recursive(index, sequence) {
-        if (sequence.length === M || index === N) {
+        if (index === N && sequence.length !== M) {
+            return 0;
+        }
+
+        if (sequence.length === M) {
             return sequence.reduce((acc, current) => acc ^ current, 0);
         }
 
