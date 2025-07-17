@@ -7,6 +7,7 @@ const [r1, c1, r2, c2] = input[1].split(' ').map(v => Number(v));
 // Please Write your code here.
 function solve() {
     const queue = [];
+    const visited = Array.from({ length: N }, () => new Array(N).fill(false));
 
     const startRow = r1 - 1;
     const startCol = c1 - 1;
@@ -17,6 +18,7 @@ function solve() {
     const dc = [1, 2, 2, 1, -1, -2, -2, -1];
 
     queue.push([startRow, startCol, 0]);
+    visited[startRow][startCol] = true;
 
     while (queue.length > 0) {
         const [currentRow, currentCol, distance] = queue.shift();
@@ -30,8 +32,9 @@ function solve() {
             const nextRow = currentRow + dr[i];
             const nextCol = currentCol + dc[i];
 
-            if (!inRange(nextRow, nextCol)) continue;
+            if (!inRange(nextRow, nextCol) || visited[nextRow][nextCol]) continue;
 
+            visited[nextRow][nextCol] = true;
             queue.push([nextRow, nextCol, distance + 1]);
         }
     }
