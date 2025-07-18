@@ -5,38 +5,56 @@ let N = Number(input[0]);
 
 // Please Write your code here.
 function solve() {
+    const visited = new Set();
     const queue = [];
     queue.push([N, 0]);
 
     let minCount = Infinity;
 
     while (queue.length > 0) {
-        const [value, count] = queue.shift();
+        const [currentValue, count] = queue.shift();
 
-        if (value === 1) {
+        if (currentValue === 1) {
             minCount = Math.min(count, minCount);
             break;
         }
 
-        if (value % 3 === 0) {
-            queue.push([value / 3, count + 1]);
-            continue;
+        if (currentValue % 3 === 0) {
+            const nextValue = currentValue / 3;
+            
+            if (!visited.has(nextValue)) {
+                queue.push([nextValue, count + 1]);
+                visited.add(nextValue);
+            }
         }
 
-        if (value % 2 === 0) {
-            queue.push([value / 2, count + 1]);
-            continue;
+        if (currentValue % 2 === 0) {
+            const nextValue = currentValue / 2;
+
+            if (!visited.has(nextValue)) {
+                queue.push([nextValue, count + 1]);
+                visited.add(nextValue);
+            }
         }
+
 
         for (let i = 0; i < 2; i++) {
             if (i === 0) {
-                queue.push([value + 1, count + 1]);
-                continue
+                const nextValue = currentValue + 1;
+
+                if (!visited.has(nextValue)) {
+                    queue.push([nextValue, count + 1]);
+                    visited.add(nextValue);
+                }
             }
             
             if (i === 1) {
-                queue.push([value - 1, count + 1]);
-                continue
+                const nextValue = currentValue - 1;
+
+                if (!visited.has(nextValue)) {
+                    queue.push([nextValue, count + 1]);
+                    visited.add(nextValue);
+                }
             }
         }
     }
