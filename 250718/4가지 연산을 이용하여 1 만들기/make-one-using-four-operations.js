@@ -18,19 +18,25 @@ function solve() {
             break;
         }
 
-        for (let i = 0; i < 4; i++) {
+        if (value % 3 === 0) {
+            queue.push([value / 3, count + 1]);
+            continue;
+        }
+
+        if (value % 2 === 0) {
+            queue.push([value / 2, count + 1]);
+            continue;
+        }
+
+        for (let i = 0; i < 2; i++) {
             if (i === 0) {
                 queue.push([value + 1, count + 1]);
-            } else if (i === 1) {
+                continue
+            }
+            
+            if (i === 1) {
                 queue.push([value - 1, count + 1]);
-            } else if (i === 2) {
-                if (value % 3 === 0) {
-                    queue.push([value / 3, count + 1]);
-                }
-            } else {
-                if (value % 2 === 0) {
-                    queue.push([value / 2, count + 1]);
-                }
+                continue
             }
         }
     }
