@@ -62,7 +62,7 @@ function solve() {
                 break;
             }
 
-            for (let i = 0; i < N; i++) {
+            for (let i = 0; i < 4; i++) {
                 const nextRow = currentRow + dr[i];
                 const nextCol = currentCol + dc[i];
 
