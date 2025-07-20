@@ -6,8 +6,7 @@ const segments = input.slice(1, N + 1).map(line => line.split(' ').map(Number));
 
 // Please Write your code here.
 function solve() {
-    const dp = new Array(N).fill(0);
-    dp[0] = 1;
+    const dp = new Array(N).fill(1);
 
     for (let i = 1; i < N; i++) {
         for (let j = 0; j < i; j++) {
