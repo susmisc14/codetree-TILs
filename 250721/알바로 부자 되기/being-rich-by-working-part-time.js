@@ -12,13 +12,12 @@ function solve() {
     dp[0] = jobs[0][2];
 
     for (let i = 1; i < N; i++) {
-        for (let j = 0; j < i; j++) {
-            if (isOverlap(jobs[j], jobs[i])) {
-                dp[i] = Math.max(jobs[j][2], jobs[i][2]);
-                continue;
-            }
+        dp[i] = jobs[i][2];
 
-            dp[i] = Math.max(dp[j] + jobs[j][2], dp[i]);
+        for (let j = 0; j < i; j++) {
+            if (isOverlap(jobs[j], jobs[i])) continue;
+
+            dp[i] = Math.max(dp[j] + jobs[i][2], dp[i]);
         }
     }
 
