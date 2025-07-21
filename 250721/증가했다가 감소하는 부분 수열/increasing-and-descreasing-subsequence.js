@@ -6,27 +6,24 @@ const sequence = input[1].split(' ').map(Number);
 
 // Please Write your code here.
 function solve() {
-    const dpInc = new Array(N).fill(1);
+    const dp = Array.from({ length: N }, () => [1, 1]);
+
     for (let i = 1; i < N; i++) {
         for (let j = 0; j < i; j++) {
-            if (sequence[j] >= sequence[i]) continue;
+            if (sequence[j] < sequence[i]) {
+                dp[i][0] = Math.max(dp[j][0] + 1, dp[i][0]);
+            }
 
-            dpInc[i] = Math.max(dpInc[i], dpInc[j] + 1);
-        }
-    }
-
-    const dpDec = new Array(N).fill(1);
-    for (let i = N - 2; i >= 0; i--) {
-        for (let j = N - 1; j > i; j--) {
-            if (sequence[j] >= sequence[i]) continue;
-
-            dpDec[i] = Math.max(dpDec[i], dpDec[j] + 1);
+            if (sequence[j] > sequence[i]) {
+                const prevMax = Math.max(dp[j][0], dp[j][1]);
+                dp[i][1] = Math.max(prevMax + 1, dp[i][1]);
+            }
         }
     }
 
     let maxLength = 0;
     for (let i = 0; i < N; i++) {
-        maxLength = Math.max(dpInc[i] + dpDec[i] - 1, maxLength);
+        maxLength = Math.max(dp[i][0], dp[i][1], maxLength);
     }
 
     return maxLength;
