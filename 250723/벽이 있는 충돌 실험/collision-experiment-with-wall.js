@@ -48,13 +48,13 @@ function solve() {
 
             const countGrid = new Map();
             for (const [row, col] of nextMarbles) {
-                const key = `${row}-${col}`;
+                const key = row * N + col;
                 countGrid.set(key, (countGrid.get(key) || 0) + 1);
             }
 
             const remainingMarbles = [];
             for (const [row, col, dir] of nextMarbles) {
-                const key = `${row}-${col}`;
+                const key = row * N + col;
 
                 if (countGrid.get(key) === 1) {
                     remainingMarbles.push([row, col, dir]);
