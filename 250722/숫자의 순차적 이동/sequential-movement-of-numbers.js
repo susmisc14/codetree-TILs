@@ -2,7 +2,7 @@ const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split('\n');
 
 const [N, M] = input[0].split(' ').map(Number);
-const grid = input.slice(1, N + 1).map(line => line.split(' ').map(Number));
+const grid = input.slice(1, N + 1).map(line => line.trim().split(' ').map(Number));
 
 // Please write your code here.
 const dr = [-1, -1, 0, 1, 1, 1, 0, -1];
