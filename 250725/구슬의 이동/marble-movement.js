@@ -3,7 +3,6 @@ const input = fs.readFileSync(0).toString().trim().split("\n");
 
 const [N, M, T, K] = input[0].split(" ").map(Number);
 
-
 // Please Write your code here.
 let marbles = [];
 for (let i = 1; i <= M; i++) {
@@ -25,35 +24,24 @@ function solve() {
         for (let i = 0; i < M; i++) {
             if (marbles[i] === null) continue;
 
-            const [row, col, direction, velocity] = marbles[i];
-            let nextRow = row + directionMap[direction][0] * velocity;
-            let nextCol = col + directionMap[direction][1] * velocity;
+            let [row, col, direction, velocity] = marbles[i];
 
-            if (inRange(nextRow, nextCol)) {
-                marbles[i][0] = nextRow;
-                marbles[i][1] = nextCol;
-            } else {
-                if (Math.floor(nextRow / N) % 2 === 0) {
-                    nextRow = Math.abs(nextRow % N);
-                    marbles[i][0] = nextRow;
-                } else {
-                    nextRow = Math.abs(nextRow % N);
-                    marbles[i][0] = nextRow;
-                    marbles[i][2] = directionMap[direction][2];
-                }
+            const moveCount = velocity % (2 * (N - 1));
 
-                if (Math.floor(nextCol / N) % 2 === 0) {
-                    nextCol = Math.abs(nextCol % N);
-                    marbles[i][1] = nextCol;
-                } else {
-                    nextCol = Math.abs(nextCol % N);
-                    marbles[i][1] = nextCol;
-                    marbles[i][2] = directionMap[direction][2];
+            for (let j = 0; j < moveCount; j++) {
+                let nextR = row + directionMap[direction][0];
+                let nextC = col + directionMap[direction][1];
+
+                if (!inRange(nextR, nextC)) {
+                    direction = directionMap[direction][2];
                 }
+                
+                row += directionMap[direction][0];
+                col += directionMap[direction][1];
             }
-
             
-            grid[nextRow][nextCol].push(i);
+            marbles[i] = [row, col, direction, velocity];
+            grid[row][col].push(i);
         }
 
         for (let i = 0; i < M; i++) {
