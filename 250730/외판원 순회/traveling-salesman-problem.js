@@ -14,7 +14,7 @@ function solve() {
             const last = path[path.length - 1];
             const first = path[0];
 
-            if (cost[last][first] === 0) return;
+            if (cost[last][first] === 0) return Infinity;
 
             return currentSum + cost[last][first];
         }
