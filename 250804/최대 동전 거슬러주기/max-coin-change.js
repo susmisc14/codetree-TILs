@@ -18,7 +18,7 @@ function solve() {
         }
     }
 
-    return dp[M];
+    return dp[M] === -Infinity ? -1 : dp[M];
 }
 
 console.log(solve());
