@@ -6,13 +6,13 @@ const sequence = input[1].split(" ").map(Number);
 
 // Please Write your code here.
 function solve() {
-    const dp = new Array(N + 1).fill(false);
+    const total = sequence.reduce((acc, current) => acc + current, 0);
+    const dp = new Array(total + 1).fill(false);
     dp[0] = true;
 
-    const total = sequence.reduce((acc, current) => acc + current, 0);
 
-    for (let i = 1; i <= N; i++) {
-        for (let j = total; j >= 0; j--) {
+    for (let i = 0; i < N; i++) {
+        for (let j = total; j >= sequence[i]; j--) {
             if (dp[j - sequence[i]]) dp[j] = true;
         }
     }
