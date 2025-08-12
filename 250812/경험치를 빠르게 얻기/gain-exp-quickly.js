@@ -21,4 +21,4 @@ for (let i = 0; i < N; i ++) {
 }
 
 const result = Math.min(...dp.slice(M));
-console.log(result);
+console.log(result !== Infinity ? result : -1);
