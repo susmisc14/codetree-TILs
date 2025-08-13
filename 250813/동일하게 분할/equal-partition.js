@@ -13,22 +13,17 @@ if (total % 2 !== 0) {
 }
 
 const targetSum = total / 2;
-let currentSum = 0;
-let partitionsFound = 0;
 
-for (let i = 0; i < N; i++) {
-    currentSum += sequence[i];
+const dp = new Array(targetSum + 1).fill(false);
+dp[0] = true;
 
-    if (currentSum > targetSum) {
-        console.log("No");
-        break;
-    }
-
-    if (currentSum === targetSum) {
-        partitionsFound++;
-        currentSum = 0;
+for (const number of sequence) {
+    for (let sum = targetSum; sum >= number; sum--) {
+        if (dp[sum - number]) {
+            dp[sum] = true;
+        }
     }
 }
-    
-const result = partitionsFound === 2 && currentSum === 0;   
-console.log(result ? "Yes" : "No");
+
+const result = dp[targetSum] ? "Yes" : "No";
+console.log(result);
