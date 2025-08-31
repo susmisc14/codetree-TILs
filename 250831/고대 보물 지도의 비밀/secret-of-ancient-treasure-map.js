@@ -6,7 +6,7 @@ const numbers = input[1].split(" ").map(Number);
 
 // Please Write your code here.
 const dp = Array.from({ length: N + 1}, () => new Array(K + 1).fill(-Infinity));
-dp[0][0] = 0;
+// dp[0][0] = 0;
 
 for (let i = 1; i <= N; i++) {
     const currentNumber = numbers[i - 1];
